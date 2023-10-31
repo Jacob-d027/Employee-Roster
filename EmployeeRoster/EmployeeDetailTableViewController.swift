@@ -13,6 +13,16 @@ class EmployeeDetailTableViewController: UITableViewController, UITextFieldDeleg
     @IBOutlet var employeeTypeLabel: UILabel!
     @IBOutlet var saveBarButtonItem: UIBarButtonItem!
     
+    var dobDatePickerCellIndexPath = IndexPath(row: 2, section: 0)
+    
+    var isEditingBirthday: Bool = false {
+        didSet {
+            dobDatePicker.isHidden = !isEditingBirthday
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
+    }
+    
     weak var delegate: EmployeeDetailTableViewControllerDelegate?
     var employee: Employee?
     
@@ -37,6 +47,24 @@ class EmployeeDetailTableViewController: UITableViewController, UITextFieldDeleg
         }
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath == IndexPath(row: 1, section: 0) {
+            isEditingBirthday.toggle()
+//            dobLabel.text = dobDatePicker.date.formatted(date: .abbreviated, time: .omitted)
+            dobLabel.textColor = .black
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath {
+        case dobDatePickerCellIndexPath where isEditingBirthday == false:
+            return 0
+        default:
+            return UITableView.automaticDimension
+        }
+    }
+    
     private func updateSaveButtonState() {
         let shouldEnableSaveButton = nameTextField.text?.isEmpty == false
         saveBarButtonItem.isEnabled = shouldEnableSaveButton
@@ -47,8 +75,16 @@ class EmployeeDetailTableViewController: UITableViewController, UITextFieldDeleg
             return
         }
         
-        let employee = Employee(name: name, dateOfBirth: Date(), employeeType: .exempt)
+        let employee = Employee(name: name, dateOfBirth: dobDatePicker.date , employeeType: .exempt)
         delegate?.employeeDetailTableViewController(self, didSave: employee)
+    }
+    
+    
+    @IBAction func datePickerValueChanged(_ sender: Any) {
+        dobLabel.text = dobDatePicker.date.formatted(date: .abbreviated, time: .omitted)
+        dobLabel.textColor = .label
+        dobDatePicker.maximumDate = .now
+
     }
     
     @IBAction func cancelButtonTapped(_ sender: Any) {

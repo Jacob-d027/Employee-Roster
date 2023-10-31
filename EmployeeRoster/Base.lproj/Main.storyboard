@@ -150,6 +150,9 @@
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="x6y-uS-a8E">
                                                     <rect key="frame" x="0.0" y="0.0" width="390" height="44"/>
+                                                    <connections>
+                                                        <action selector="datePickerValueChanged:" destination="sKr-bE-vCi" eventType="valueChanged" id="LmP-QN-uoy"/>
+                                                    </connections>
                                                 </datePicker>
                                             </subviews>
                                             <constraints>
@@ -227,7 +230,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a6N-gP-Y1Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="vE1-1q-P3J" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2267" y="169"/>
+            <point key="canvasLocation" x="2266.1538461538462" y="168.48341232227489"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="waa-u7-kAT">
