@@ -7,9 +7,14 @@
 
 import UIKit
 
+protocol EmployeeTypeTableViewControllerDelegate {
+    func employeeTypeTableViewController(_ controller: UIViewController, didSelect employeeType: EmployeeType)
+}
+
 class EmployeeTypeTableViewController: UITableViewController {
 
     var employeeType: EmployeeType?
+    var delegate: EmployeeTypeTableViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +58,10 @@ class EmployeeTypeTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        employeeType = EmployeeType.allCases[indexPath.row]
+        let selectedType = EmployeeType.allCases[indexPath.row]
+        
+        employeeType = selectedType
+        delegate?.employeeTypeTableViewController(self, didSelect: selectedType)
         tableView.reloadData()
     }
     
